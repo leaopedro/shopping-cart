@@ -1,10 +1,9 @@
-import {expect} from 'chai';
+import { expect } from "chai";
 import { Cart, updateCart, CartDocument } from "./Cart";
-const mockingoose  = require('mockingoose');
+const mockingoose = require("mockingoose");
 import { Product } from "./Product";
 
 describe("updateCart", () => {
-
   let cart: CartDocument = new Cart({
     userId: "1",
     items: [],
@@ -14,14 +13,11 @@ describe("updateCart", () => {
   });
 
   it("should add item and return cart updated", async () => {
+    mockingoose(Product).toReturn([{ sku: "0001", price: 100 }], "find");
 
-    mockingoose(Product).toReturn([{sku: '0001', price: 100}], 'find');
+    const itemsToAdd = [{ sku: "0001", quantity: 1 }];
 
-    const itemsToAdd = [
-        { sku: "0001", quantity: 1 },
-    ];
-
-    const response = await updateCart({cart, items: itemsToAdd, type: 'ADD'});
+    const response = await updateCart({ cart, items: itemsToAdd, type: "ADD" });
 
     expect(response.items.length).to.equal(1);
     expect(response.items[0].quantity).to.equal(1);
@@ -31,14 +27,15 @@ describe("updateCart", () => {
   });
 
   it("should remove items and return cart updated", async () => {
+    mockingoose(Product).toReturn([{ sku: "0001", price: 100 }], "find");
 
-    mockingoose(Product).toReturn([{sku: '0001', price: 100}], 'find');
+    const itemsToRemove = [{ sku: "0001", quantity: 1 }];
 
-    const itemsToRemove = [
-        { sku: "0001", quantity: 1 },
-    ];
-
-    const response = await updateCart({cart, items: itemsToRemove, type: 'REMOVE'});
+    const response = await updateCart({
+      cart,
+      items: itemsToRemove,
+      type: "REMOVE",
+    });
 
     expect(response.items.length).to.equal(0);
     expect(response.amount).to.equal(0);
@@ -47,14 +44,11 @@ describe("updateCart", () => {
   });
 
   it("should give discount if there's more than 3 products", async () => {
+    mockingoose(Product).toReturn([{ sku: "0001", price: 100 }], "find");
 
-    mockingoose(Product).toReturn([{sku: '0001', price: 100}], 'find');
+    const itemsToAdd = [{ sku: "0001", quantity: 3 }];
 
-    const itemsToAdd = [
-        { sku: "0001", quantity: 3 },
-    ];
-
-    const response = await updateCart({cart, items: itemsToAdd, type: 'ADD'});
+    const response = await updateCart({ cart, items: itemsToAdd, type: "ADD" });
 
     expect(response.items.length).to.equal(1);
     expect(response.items[0].quantity).to.equal(3);
@@ -71,15 +65,22 @@ describe("updateCart", () => {
       discount: 0,
       dueAmount: 0,
     });
-    mockingoose(Product).toReturn([{sku: '0001', price: 1299}, {sku: '0002', price: 2500}, {sku: '0003', price: 2065}], 'find');
+    mockingoose(Product).toReturn(
+      [
+        { sku: "0001", price: 1299 },
+        { sku: "0002", price: 2500 },
+        { sku: "0003", price: 2065 },
+      ],
+      "find"
+    );
 
     const itemsToAdd = [
-        { sku: "0001", quantity: 1 },
-        { sku: "0002", quantity: 2 },
-        { sku: "0003", quantity: 3 },
+      { sku: "0001", quantity: 1 },
+      { sku: "0002", quantity: 2 },
+      { sku: "0003", quantity: 3 },
     ];
 
-    const response = await updateCart({cart, items: itemsToAdd, type: 'ADD'});
+    const response = await updateCart({ cart, items: itemsToAdd, type: "ADD" });
 
     expect(response.items.length).to.equal(3);
     expect(response.amount).to.equal(12494);

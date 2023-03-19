@@ -64,7 +64,7 @@ export const addToCart = async (
   const newCart = await updateCart({
     cart,
     items: req.body.items as CartItem[],
-    type: 'ADD'
+    type: "ADD",
   });
 
   return res.status(200).json(newCart);
@@ -81,7 +81,7 @@ export const removeFromCart = async (
 ) => {
   console.debug("removeFromCart", req.body);
 
-  let cart = await Cart.findOne({ userId: req.params.userId });
+  const cart = await Cart.findOne({ userId: req.params.userId });
   if (!cart) {
     return res.status(404).json({
       message: "Cart not found",
@@ -89,8 +89,12 @@ export const removeFromCart = async (
   }
 
   const currentSkus = cart.items.map((i) => i.sku);
-  const removedSkus = new Set(req.body.items.map(({ sku }: { sku: string }) => sku));
-  const skusNotInCart = Array.from(removedSkus).filter((sku: string) => !currentSkus.includes(sku));
+  const removedSkus = new Set(
+    req.body.items.map(({ sku }: { sku: string }) => sku)
+  );
+  const skusNotInCart = Array.from(removedSkus).filter(
+    (sku: string) => !currentSkus.includes(sku)
+  );
 
   if (skusNotInCart.length > 0) {
     return res.status(400).json({
@@ -102,7 +106,7 @@ export const removeFromCart = async (
   const newCart = await updateCart({
     cart,
     items: req.body.items as CartItem[],
-    type: 'REMOVE'
+    type: "REMOVE",
   });
 
   return res.status(200).json(newCart);

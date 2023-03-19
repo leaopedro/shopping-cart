@@ -64,7 +64,7 @@ const calculateAmounts = function (
 export const updateCart = async function ({
   cart,
   items,
-  type
+  type,
 }: {
   cart: CartDocument;
   items: CartItem[];
@@ -72,17 +72,17 @@ export const updateCart = async function ({
 }): Promise<CartDocument> {
   items.forEach(({ sku, quantity }: CartItem) => {
     const item = cart.items.find((i) => i.sku === sku);
-    if (type === 'ADD') {
+    if (type === "ADD") {
       if (!item) cart.items.push({ sku, quantity });
       else item.quantity += quantity;
-    } else if (type === 'REMOVE') {
+    } else if (type === "REMOVE") {
       if (!item) return;
       if (item.quantity > quantity) item.quantity -= quantity;
       else {
         const index = cart.items.indexOf(item);
         cart.items.splice(index, 1);
       }
-    } else if (type === 'CLEAR') {
+    } else if (type === "CLEAR") {
       cart.items = [];
     }
   });
