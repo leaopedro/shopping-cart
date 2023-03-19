@@ -25,6 +25,10 @@ yarn
 ```bash
 mongod
 ```
+- Seed data into you db
+```
+yarn seed
+```
 - Build and run the project
 ```
 yarn build
