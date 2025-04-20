@@ -1,8 +1,4 @@
 <p align="center">
-  <img src="shopping_cart_header.svg" alt="Shopping Cart Service" width="600" />
-</p>
-
-<p align="center">
   <a href="https://github.com/yourusername/shopping-cart-app/actions">
     <img src="https://img.shields.io/github/actions/workflow/status/yourusername/shopping-cart-app/ci.yml?style=flat-square" alt="CI Status" />
   </a>
