@@ -1,107 +1,83 @@
-# Shopping Cart app
+# Shopping Cart Service
 
-[definition](https://potent-afternoon-af0.notion.site/Shopping-cart-ac0c7820e1c34032a46eb98d8105db0)
+A lightweight RESTful shopping cart application built with Node.js and MongoDB.
 
-# Table of contents:
+## Prerequisites
+- [Node.js](https://nodejs.org/)
+- [MongoDB](https://www.mongodb.com/)
 
-- [Pre-reqs](#pre-reqs)
-- [Getting started](#getting-started)
-- [API](#api)
+## Installation
 
-# Pre-reqs
-
-To build and run this app locally you will need a few things:
-
-- Install [Node.js](https://nodejs.org/en/)
-- Install [MongoDB](https://docs.mongodb.com/manual/installation/)
-
-# Getting started
-
-- Clone the repository
-- Install dependencies
-
+1. **Clone the repository**
+   ```bash
+git clone https://github.com/leaopedro/shopping-cart.git
+cd shopping-cart
 ```
-yarn
+2. **Install dependencies**
+   ```bash
+yarn install
 ```
-
-- Configure your mongoDB server
-
-- Start your mongoDB server
-
-```bash
+3. **Configure database**
+   - Update your MongoDB connection settings in `config/default.json` or via environment variables.
+4. **Start MongoDB**
+   ```bash
 mongod
 ```
-
-- Seed data into you db
-
-```
+5. **(Optional) Seed the database**
+   ```bash
 yarn seed
 ```
-
-- Build and run the project
-
-```
+6. **Run the application**
+   - Production build:
+     ```bash
 yarn build
 yarn start
 ```
-
-Or
-
-```
+   - Development mode (auto-reload):
+     ```bash
 yarn watch-node
 ```
 
-# Architecture
+## Architecture
+Follows a Model‑Controller pattern:
 
-Entry point (server router) >> Controllers >> Models
+- **Controllers**: Handle incoming HTTP requests and responses.
+- **Models**: Define MongoDB schemas and interact with the database.
+- **Routes**: Map endpoints to controller actions.
 
-The app uses a basic Model-Controller architecture.
+## API Endpoints
 
-Test coverage is not good, currently tests cover only the the business logic. With more time I would increase coverage and add more edge cases.
+### Health Check
+- **GET** `/health`  
+  Returns HTTP 200 OK.
 
-## Models:
+### Cart Operations
 
-- Cart
-- Product
+- **GET** `/shopping-cart/:userId`  
+  Retrieve the cart for a specific user.
 
-# API
-
-## GET /shopping-cart
-
-Healthcheck endpoint. Should always return 200 OK.
-
-## GET /shopping-cart/:userId
-
-Returns a shopping cart based on the provided id.
-
-## POST /shopping-cart/:userId/add
-
-Adds specified items to shopping cart
-Body:
-
-```
-{
+- **POST** `/shopping-cart/:userId/add`  
+  Add items to the user’s cart.  
+  **Request Body:**
+  ```json
+  {
     "items": [
-        {
-            "sku": "0001",
-            "quantity": 1
-        }
+      { "sku": "0001", "quantity": 1 }
     ]
-}
-```
+  }
+  ```
 
-## POST /shopping-cart/:userId/remove
-
-Removes specified items from shopping cart
-Body:
-
-```
-{
+- **POST** `/shopping-cart/:userId/remove`  
+  Remove items from the user’s cart.  
+  **Request Body:**
+  ```json
+  {
     "items": [
-        {
-            "sku": "0001",
-            "quantity": 1
-        }
+      { "sku": "0001", "quantity": 1 }
     ]
-}
-```
+  }
+  ```
+
+## Testing
+Test coverage currently focuses on core business logic. Future improvements will extend coverage to edge cases and integration tests.
+
