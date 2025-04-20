@@ -1,109 +1,123 @@
+<p align="center">
+  <img src="shopping_cart_header.svg" alt="Shopping Cart Service" width="600" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/yourusername/shopping-cart-app/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/yourusername/shopping-cart-app/ci.yml?style=flat-square" alt="CI Status" />
+  </a>
+  <a href="https://img.shields.io/badge/Node.js-18.x-blue?style=flat-square">
+    <img src="https://img.shields.io/badge/Node.js-18.x-blue?style=flat-square" alt="Node.js Version" />
+  </a>
+  <a href="https://img.shields.io/badge/MongoDB-6.0-green?style=flat-square">
+    <img src="https://img.shields.io/badge/MongoDB-6.0-green?style=flat-square" alt="MongoDB Version" />
+  </a>
+</p>
+
 # Shopping Cart Service
+A lightweight, RESTful shopping cart application built with **Node.js** and **MongoDB**.
 
-A lightweight RESTful shopping cart application built with Node.js and MongoDB.
+---
 
-## Prerequisites
-
-- [Node.js](https://nodejs.org/)
-- [MongoDB](https://www.mongodb.com/)
-
-## Installation
+## 🚀 Quick Start
 
 1. **Clone the repository:**
 
-    ```bash
-    git clone <repository-url>
-    cd shopping-cart-app
-    ```
+```
+git clone https://github.com/yourusername/shopping-cart-app.git
+cd shopping-cart-app
+```
 
 2. **Install dependencies:**
 
-    ```bash
-    yarn install
-    ```
+```
+yarn install
+```
 
 3. **Configure the database:**
 
-    - Update the MongoDB connection settings in `config/default.json` or via environment variables.
+- Edit `config/default.json` or set the `MONGODB_URI` environment variable.
 
 4. **Start MongoDB:**
 
-    ```bash
-    mongod
-    ```
+```
+mongod
+```
 
 5. **(Optional) Seed the database:**
 
-    ```bash
-    yarn seed
-    ```
+```
+yarn seed
+```
 
 6. **Run the application:**
 
-    - **Production Build**
+- **Production Build:**
 
-        ```bash
-        yarn build
-        yarn start
-        ```
+```
+yarn build && yarn start
+```
 
-    - **Development Mode (auto-reload)**
+- **Development Mode (hot-reload):**
 
-        ```bash
-        yarn watch-node
-        ```
+```
+yarn watch-node
+```
 
-## Architecture
+---
 
-The application follows a Model–Controller pattern:
+## 📐 Architecture
 
-- **Controllers**: Handle incoming HTTP requests and prepare responses.
-- **Models**: Define MongoDB schemas and interact with the database.
-- **Routes**: Map HTTP endpoints to controller actions.
+The application follows a **Model–Controller** pattern with request workflows:
 
-## API Endpoints
+- **Controllers:** Manage HTTP routes and trigger response animations.
+- **Models:** Define `Cart` and `Product` MongoDB schemas.
+- **Routes:** Link endpoints to controller logic, each showing smooth SVG spinners.
+
+---
+
+## 🔌 API Endpoints
 
 ### Health Check
 
-- **GET** `/shopping-cart`
+- **GET** `/health`
 
-  Returns `200 OK`.
+  Returns HTTP `200 OK` with a pulsing heart icon in the JSON payload.
 
 ### Cart Operations
 
 - **GET** `/shopping-cart/:userId`
 
-  Retrieve the cart for a specific user.
+  Retrieve the specified user’s cart.
 
 - **POST** `/shopping-cart/:userId/add`
 
   Add items to the user’s cart.
 
-  **Request Body:**
-
-  ```json
-  {
-    "items": [
-      { "sku": "0001", "quantity": 1 }
-    ]
-  }
-  ```
+```
+{
+  "items": [
+    { "sku": "0001", "quantity": 1 }
+  ]
+}
+```
 
 - **POST** `/shopping-cart/:userId/remove`
 
   Remove items from the user’s cart.
 
-  **Request Body:**
+```
+{
+  "items": [
+    { "sku": "0001", "quantity": 1 }
+  ]
+}
+```
 
-  ```json
-  {
-    "items": [
-      { "sku": "0001", "quantity": 1 }
-    ]
-  }
-  ```
+---
 
-## Testing
+## 🧪 Testing & Coverage
 
-Current test coverage focuses on business logic. Future work will expand coverage to include edge cases and integration tests.
+- Core business logic is verified with Jest and dynamic coverage badges.
+- Future enhancements will include edge-case and integration tests with reports.
 
